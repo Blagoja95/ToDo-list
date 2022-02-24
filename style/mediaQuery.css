@@ -1,0 +1,26 @@
+@media  (max-widt: 600px){
+    html{
+        /* // 9px */
+        font-size: 56.25%;
+    }
+}
+
+@media (max-width: 490px){
+    .content {
+        width: 60%;
+    }
+
+    .textArea{
+        width: 20rem;
+    }
+}
+
+@media (max-width: 370px){
+    html {
+        /* 8px */
+        font-size: 50%;
+    }
+    .btn-tasks button{
+        padding: .6rem .8rem;
+    }
+}
