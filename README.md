@@ -1,3 +1,3 @@
 # Todo list
 
-Chalange taken from geeksforgeeks.org
+Challange taken from geeksforgeeks.org
