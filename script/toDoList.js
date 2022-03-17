@@ -8,9 +8,7 @@ const msg = document.querySelector(".message");
 // put placeholder text in iput text area
 input.setAttribute("placeholder", "Buy eggs!");
 
-let btnEditArr = [];
-
-let str = [];
+let taskArr = [];
 let taskCounter = 0;
 let check = true;
 
@@ -19,20 +17,17 @@ const addTask = function () {
   msg.classList.add("hidden");
 
   if (input.value !== "" && check == true) {
-    str[taskCounter] = input.value;
-    input.value = "";
-    // console.log(str[taskCounter]);
-
     // Creating ToDo element
     //create task
     const task = document.createElement("div");
     task.setAttribute("class", "task");
 
     //ToDO text
-    const content = document.createElement("p");
-    content.setAttribute("class", "task-content");
-    task.appendChild(content);
-    content.innerHTML = str[taskCounter];
+    taskArr[taskCounter] = document.createElement("p");
+    taskArr[taskCounter].setAttribute("class", "task-content");
+    task.appendChild(taskArr[taskCounter]);
+    taskArr[taskCounter].innerHTML = input.value;
+    input.value = "";
 
     //ToDO buttnons
     //div
@@ -44,21 +39,23 @@ const addTask = function () {
     const btnEdit = document.createElement("button");
     btnEdit.innerHTML = "Edit";
     btnEdit.setAttribute("class", "btn-edit");
+    btnEdit.setAttribute("id", `${taskCounter}`);
 
     //edit task event
     btnEdit.addEventListener("click", function () {
       // first i change elemets for edit mode
       h2.innerHTML = "Edite your task";
       submitBtn.value = "Edit";
-      input.value = content.innerHTML; // take value from task that is selected
+      // take value from task that is selected
+      input.value = taskArr[btnEdit.id].innerHTML;
 
       // to disable submit task mode
       check = false;
 
       //edit button in edit mode
-      submitBtn.addEventListener("click", function () {
+      const edditTask = function () {
         //get changed name for selected task
-        content.innerHTML = input.value;
+        taskArr[btnEdit.id].innerHTML = input.value;
 
         //get back everything to submit mode
         h2.innerHTML = "Add Items";
@@ -68,20 +65,27 @@ const addTask = function () {
         // msg to user that edit task is complited
         msg.classList.remove("hidden");
         check = true; // back to submit mode
+        console.log(taskArr[btnEdit.id]);
+      };
+      submitBtn.addEventListener("click", edditTask);
+      input.addEventListener("keypress", function (e) {
+        if (e.key === "Enter") edditTask();
       });
     });
 
     btnTask.appendChild(btnEdit);
-    btnEditArr[taskCounter] = btnTask;
 
     //delete
     const btnDel = document.createElement("button");
     btnDel.innerHTML = "Delete";
     btnDel.setAttribute("class", "btn-del");
+    btnDel.setAttribute("id", `${taskCounter}`);
 
     //remove task event
     btnDel.addEventListener("click", function () {
       tasks.removeChild(task);
+      taskArr.splice(btnDel.id);
+      taskCounter--;
     });
     btnTask.appendChild(btnDel);
 
